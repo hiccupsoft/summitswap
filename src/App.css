@@ -9,9 +9,20 @@ img{
   margin:20px;
 }
 .navbar{
-  margin-bottom: 80px;
-  text-align: right;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  top:0;
+  margin:5px;
 }
 .navbar button{
   margin:10px;
+}
+a{
+  text-decoration: none;
+  color:white;
+  font-weight: 100;
+}
+.top-logo{
+  margin-top: 100px;
 }
