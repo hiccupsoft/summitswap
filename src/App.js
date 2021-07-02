@@ -15,7 +15,7 @@ function App() {
   const [eth, setEth] = useState(0);
   const [koda, setKoda] = useState(0);
   const connectWallet = async () => {
-    window.ethereum.enable();
+    await window.ethereum.enable();
     setConnected(true);
   };
   useEffect(() => {
@@ -46,7 +46,7 @@ function App() {
       <div className="navbar">
         {connected ? (
           <span style={{ margin: "10px" }}>
-            KODA Balance:{(koda/1e18).toFixed(4)} ({((koda/1e18)*parseFloat(price)).toFixed(2)} USD)
+            KODA Balance:{(koda/1e9).toFixed(4)} ({((koda/1e9)*parseFloat(price)).toFixed(2)} USD)
             <br/>
             BNB Balance:{(eth/1e18).toFixed(4)}
             <br/>
