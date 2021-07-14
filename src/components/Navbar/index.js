@@ -6,6 +6,8 @@ import Button from "@material-ui/core/Button";
 import bnbLogo from "../../assets/bnb.svg";
 import { IERC20ABI } from "../../abi/IERC20";
 import { useWallet } from "../../providers/WalletProvider";
+import {getKODAPrice,KODA_TOKEN_ADDRESS,balanceOf} from '../../web3/kodaMethods'
+import {Link} from 'react-router-dom'
 const TOKEN_ADDRESS = "0x9E993671976a5AC51bBfB3Db9E34eAC8d518fe82";
 
 function Navbar() {
@@ -37,29 +39,33 @@ function Navbar() {
   };
   useEffect(() => {
     const fetchPrice = async () => {
-      let response = await axios.get(
-        "https://api.bscscan.com/api?module=token&action=tokeninfo&contractaddress=0x9E993671976a5AC51bBfB3Db9E34eAC8d518fe82&apikey=ISMIHCDD1TKJ4R3T2X4S76YC8RT9KS2SAG"
-      );
-      console.log(response.data.result[0].tokenPriceUSD);
+      const priceUSD = await getKODAPrice()
       const web3 = new Web3(window.ethereum);
       const accounts = await web3.eth.getAccounts();
       const rate = await getExchangeRate();
-      setPrice(response.data.result[0].tokenPriceUSD * rate);
+      setPrice(priceUSD* rate);
       setAccount(accounts[0]);
       const _eth = await web3.eth.getBalance(accounts[0]);
       setEth(_eth);
-      const contractInstance = new web3.eth.Contract(IERC20ABI, TOKEN_ADDRESS);
-      const balance = await contractInstance.methods
-        .balanceOf(accounts[0])
-        .call();
+      const balance = await balanceOf(KODA_TOKEN_ADDRESS,accounts[0])
       setKoda(balance);
     };
     if (connected) {
       fetchPrice();
+      setConnected(true)
     }
   }, [connected]);
   return (
     <div className="navbar">
+      <Link to='/'>
+      <div style={{float:'left',padding:'20px'}}>Home</div>
+      </Link>
+      <Link to='/swap'>
+      <div style={{float:'left',padding:'20px'}}>KapexSwap</div>
+      </Link>
+      <Link to='/admin'>
+      <div style={{float:'left',padding:'20px'}}>Dashboard</div>
+      </Link>
       {connected ? (
         <div className="details">
           <div className="details-box">
@@ -68,8 +74,8 @@ function Navbar() {
           </div>
           <div className="details-box">
             {" "}
-            {(koda / 1e9).toFixed(4)} <span className="pink"> KODA </span> ({" "}
-            {((koda / 1e9) * price).toFixed(2)}{" "}
+            {(koda / 1e18).toFixed(4)} <span className="pink"> KODA </span> ({" "}
+            {((koda / 1e18) * price).toFixed(2)}{" "}
             <span className="pink"> GBP </span> )
           </div>
           <div className="details-box">

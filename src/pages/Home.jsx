@@ -3,11 +3,11 @@ import ReactPlayer from "react-player";
 import summitLogo from "../assets/summit.svg";
 import kodaLogo from "../assets/koda-finance.svg";
 import Navbar from "../components/Navbar";
-
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 function Home() {
   return (
     <div>
-      <Navbar />
       <div className="top-logo">
         <img style={{ height: "8vh" }} src={summitLogo} />
         <h4>- Summit Swap in Development -</h4>

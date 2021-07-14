@@ -1,13 +1,34 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import kodaLogo from "../assets/koda-finance.svg";
-
+import {
+  swapKODAForKAPEX,
+  balanceOf,
+  KAPEX_TOKEN_ADDRESS,
+} from "../web3/kodaMethods";
+import { useWallet } from "../providers/WalletProvider";
 function KapexSwap() {
   const [amount, setAmount] = useState(0);
+  const [KAPEX, setKAPEX] = useState(0);
+  const wallet = useWallet();
+  const handleSwap = async () => {
+    const receipt = await swapKODAForKAPEX(String(amount * 1e18));
+    const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
+    setKAPEX(balance);
+  };
+  useEffect(() => {
+    const init = async () => {
+      const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
+      console.log("KAPEX: ",balance)
+      setKAPEX(balance);
+    };
+    if (wallet.status=='connected') {
+      init();
+    }
+  });
   return (
     <div>
-      <Navbar />
       <div className="swap-box">
         <h2>SWAP</h2>
         <img style={{ height: "5vh" }} src={kodaLogo} />
@@ -45,9 +66,11 @@ function KapexSwap() {
           style={{ marginTop: "20px" }}
           variant="contained"
           color="secondary"
+          onClick={handleSwap}
         >
           Swap
         </Button>
+        <h4>Your KAPEX Balance: {(KAPEX/1e18).toFixed(2).toLocaleString("fullwide", { useGrouping: false })}</h4>
         <div className="tnc" style={{ textAlign: "left", fontSize: "0.8em" }}>
           <h3>Terms and Conditions</h3>
           <p>1. You can only convert once.</p>
