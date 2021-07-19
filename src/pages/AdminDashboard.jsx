@@ -17,6 +17,7 @@ function AdminDashboard() {
   }, []);
   return (
     <div>
+      <Navbar />
       <div className="admin-dashboard">
         <h1>KAPEX DASHBOARD</h1>
         <Grid container>

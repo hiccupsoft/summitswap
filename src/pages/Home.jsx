@@ -8,6 +8,7 @@ import { Button } from "@material-ui/core";
 function Home() {
   return (
     <div>
+      <Navbar />
       <div className="top-logo">
         <img style={{ height: "8vh" }} src={summitLogo} />
         <h4>- Summit Swap in Development -</h4>

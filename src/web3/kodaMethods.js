@@ -6,6 +6,16 @@ import { IERC20ABI } from "../abi/IERC20";
 export const KAPEX_SWAP_ADDRESS = "0xF31031eAe7d2B8DBB1fE56329F33965b196DCb8b";
 export const KAPEX_TOKEN_ADDRESS = "0xCE94EBff1d7F86aa12022Bab141ae7D7581e3Ac4";
 export const KODA_TOKEN_ADDRESS = "0x56d4F6F82175caca12166d7F1E605a6d6bb69b76";
+
+export const approveKODAforSwap = async (amount)=>{
+  const web3 = new Web3(window.ethereum);
+  const accounts = await web3.eth.getAccounts();
+  const kodaInstance = new web3.eth.Contract(
+    IERC20ABI,
+    KODA_TOKEN_ADDRESS
+  );
+  const approveReceipt = await kodaInstance.methods.approve(KAPEX_SWAP_ADDRESS,amount).send({ from:accounts[0] });
+}
 export const swapKODAForKAPEX = async (amount) => {
   const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
