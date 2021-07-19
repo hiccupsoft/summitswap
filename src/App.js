@@ -9,7 +9,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-      <Navbar />
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/swap" component={KapexSwap} />

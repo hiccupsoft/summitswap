@@ -20,9 +20,7 @@ function Navbar() {
   const connectWallet = async () => {
     wallet.setLoadingState(true);
     await wallet.connect();
-    if (window.ethereum.isConnected()) {
-      setConnected(true);
-    }
+    setConnected(true);
     wallet.setLoadingState(false);
   };
   const disconnectWallet = async () => {
@@ -31,7 +29,7 @@ function Navbar() {
   };
   const getExchangeRate = async () => {
     let response = await axios.get(
-      "http://api.exchangeratesapi.io/v1/latest?access_key=9a2024e3a436b3e651e4ed2a2508406f"
+      "https://api.exchangeratesapi.io/v1/latest?access_key=540ef77de6f40c8a9b7be3efc6434afe"
     );
     const { GBP, USD } = response.data.rates;
     return parseFloat(GBP) / USD;
@@ -43,18 +41,18 @@ function Navbar() {
       const web3 = new Web3(window.ethereum);
       const accounts = await web3.eth.getAccounts();
       const rate = await getExchangeRate();
-      setPrice(priceUSD* rate);
+      setPrice(priceUSD);
       setAccount(accounts[0]);
       const _eth = await web3.eth.getBalance(accounts[0]);
       setEth(_eth);
       const balance = await balanceOf(KODA_TOKEN_ADDRESS,accounts[0])
       setKoda(balance);
     };
-    if (connected) {
+    if (wallet.status=="connected") {
       fetchPrice();
       setConnected(true)
     }
-  }, [connected]);
+  }, [wallet]);
   return (
     <div className="navbar">
       <Link to='/'>
@@ -82,7 +80,7 @@ function Navbar() {
             {" "}
             {(eth / 1e18).toFixed(4)} <span className="pink"> BNB </span>
           </div>
-          <div className="details-box"> {account} </div>
+          <div className="details-box"> {wallet.account} </div>
           <Button
             variant="contained"
             color="secondary"
