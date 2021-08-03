@@ -3,8 +3,8 @@ import axios from "axios";
 import { KAPEX_SWAP_ABI } from "../abi/KapexSwap";
 import { IERC20ABI } from "../abi/IERC20";
 
-export const KAPEX_SWAP_ADDRESS = "0xF31031eAe7d2B8DBB1fE56329F33965b196DCb8b";
-export const KAPEX_TOKEN_ADDRESS = "0xCE94EBff1d7F86aa12022Bab141ae7D7581e3Ac4";
+export const KAPEX_SWAP_ADDRESS = "0xf67152c2fe09BC4eDE694A655c00e00B40656c35";
+export const KAPEX_TOKEN_ADDRESS = "0xbaF513d9BDA330a1921092fC8ae6354F70A558FA";
 export const KODA_TOKEN_ADDRESS = "0x56d4F6F82175caca12166d7F1E605a6d6bb69b76";
 
 export const approveKODAforSwap = async (amount)=>{
