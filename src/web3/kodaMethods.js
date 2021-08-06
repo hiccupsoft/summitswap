@@ -3,9 +3,9 @@ import axios from "axios";
 import { KAPEX_SWAP_ABI } from "../abi/KapexSwap";
 import { IERC20ABI } from "../abi/IERC20";
 import { KODATIPABI } from "../abi/KODATIP";
-export const KAPEX_SWAP_ADDRESS = "0xf67152c2fe09BC4eDE694A655c00e00B40656c35";
+export const KAPEX_SWAP_ADDRESS = "0x011465988AB008F7E2F0a7cB6e374e4d11608A51";
 export const KAPEX_TOKEN_ADDRESS = "0xbaF513d9BDA330a1921092fC8ae6354F70A558FA";
-export const KODA_TOKEN_ADDRESS = "0x56d4F6F82175caca12166d7F1E605a6d6bb69b76";
+export const KODA_TOKEN_ADDRESS = "0xf1610b0224657ce827be377c60e800eb18a72837";
 export const KODA_TIP_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
 export const approveKODAforSwap = async (amount) => {
   const web3 = new Web3(window.ethereum);
@@ -51,7 +51,7 @@ export const createTipWallet = async (amount,username) => {
   const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
   const tipInstance = new web3.eth.Contract(KODATIPABI, KODA_TIP_ADDRESS);
-  const approveReceipt = await kodaInstance.methods
+  const approveReceipt = await tipInstance.methods
     .createTipWallet(amount, username)
     .send({ from: accounts[0] });
 };
