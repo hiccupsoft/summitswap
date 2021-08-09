@@ -15,11 +15,11 @@ function KapexSwap() {
   const [isApproved,setIsApproved] = useState();
   const wallet = useWallet();
   const handleApprove = async ()=>{
-    const receipt = await approveKODAforSwap(String(amount * 1e18));
+    const receipt = await approveKODAforSwap(String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false }));
     setIsApproved(true)
   }
   const handleSwap = async () => {
-    const receipt = await swapKODAForKAPEX(String(amount * 1e18));
+    const receipt = await swapKODAForKAPEX(String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false }));
     const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
     setKAPEX(balance);
   };

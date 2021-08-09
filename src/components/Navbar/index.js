@@ -8,7 +8,6 @@ import { IERC20ABI } from "../../abi/IERC20";
 import { useWallet } from "../../providers/WalletProvider";
 import {getKODAPrice,KODA_TOKEN_ADDRESS,balanceOf} from '../../web3/kodaMethods'
 import {Link} from 'react-router-dom'
-const TOKEN_ADDRESS = "0x9E993671976a5AC51bBfB3Db9E34eAC8d518fe82";
 
 function Navbar() {
   const [connected, setConnected] = useState(false);
@@ -72,8 +71,8 @@ function Navbar() {
           </div>
           <div className="details-box">
             {" "}
-            {(koda / 1e18).toFixed(4)} <span className="pink"> KODA </span> ({" "}
-            {((koda / 1e18) * price).toFixed(2)}{" "}
+            {(koda / 1e9).toFixed(4)} <span className="pink"> KODA </span> ({" "}
+            {((koda / 1e9) * price).toFixed(2)}{" "}
             <span className="pink"> GBP </span> )
           </div>
           <div className="details-box">
