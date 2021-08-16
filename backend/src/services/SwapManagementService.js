@@ -16,10 +16,10 @@ async function addSwap(emailId, amount, address) {
     throw "couldn't create new user";
   }
 }
-// async function getAllUsers() {
-//   const details = await User.findAll({ emailId });
-//   return details;
-// }
+async function getAllUsers() {
+  // const details = await User.findAll({ emailId });
+  // return details;
+}
 async function getAllSwaps() {
   const details = await Swap.findAll();
   return details;
