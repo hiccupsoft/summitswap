@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from './pages/Home'
 import KapexSwap from './pages/KapexSwap'
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
+
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -12,6 +14,7 @@ function App() {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/swap" component={KapexSwap} />
+          <Route path="/login" component={AdminLogin} />
           <Route path="/admin" component={AdminDashboard} />
         </Switch>
       </div>

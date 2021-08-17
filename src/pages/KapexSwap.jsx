@@ -11,25 +11,30 @@ import {
 import { useWallet } from "../providers/WalletProvider";
 function KapexSwap() {
   const [amount, setAmount] = useState(0);
+  const [email, setEmail] = useState("xyz@abc.com");
   const [KAPEX, setKAPEX] = useState(0);
-  const [isApproved,setIsApproved] = useState();
+  const [isApproved, setIsApproved] = useState();
   const wallet = useWallet();
-  const handleApprove = async ()=>{
-    const receipt = await approveKODAforSwap(String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false }));
-    setIsApproved(true)
-  }
+  const handleApprove = async () => {
+    const receipt = await approveKODAforSwap(
+      String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false })
+    );
+    setIsApproved(true);
+  };
   const handleSwap = async () => {
-    const receipt = await swapKODAForKAPEX(String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false }));
+    const receipt = await swapKODAForKAPEX(
+      String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false })
+    );
     const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
     setKAPEX(balance);
   };
   useEffect(() => {
     const init = async () => {
       const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
-      console.log("KAPEX: ",balance)
+      console.log("KAPEX: ", balance);
       setKAPEX(balance);
     };
-    if (wallet.status=='connected') {
+    if (wallet.status == "connected") {
       init();
     }
   });
@@ -63,30 +68,56 @@ function KapexSwap() {
           variant="outlined"
           InputLabelProps={{ className: "text-label" }}
           InputProps={{ className: "input-field" }}
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <br />
+        <br />
+        <TextField
+          size="small"
+          style={{
+            width: "50%",
+            borderRadius: "10px",
+            height: "35px",
+            margin: "auto",
+          }}
+          label=""
+          variant="outlined"
+          InputLabelProps={{ className: "text-label" }}
+          InputProps={{ className: "input-field" }}
           value={amount}
           onChange={(e) => {
             setAmount(e.target.value);
           }}
         />
         <br />
-        {isApproved?(<Button
-          style={{ marginTop: "20px" }}
-          variant="contained"
-          color="secondary"
-          onClick={handleSwap}
-        >
-          Swap
-        </Button>):(
+        {isApproved ? (
           <Button
-          style={{ marginTop: "20px" }}
-          variant="contained"
-          color="secondary"
-          onClick={handleApprove}
-        >
-          Approve
-        </Button>
+            style={{ marginTop: "20px" }}
+            variant="contained"
+            color="secondary"
+            onClick={handleSwap}
+          >
+            Swap
+          </Button>
+        ) : (
+          <Button
+            style={{ marginTop: "20px" }}
+            variant="contained"
+            color="secondary"
+            onClick={handleApprove}
+          >
+            Approve
+          </Button>
         )}
-        <h4>Your KAPEX Balance: {(KAPEX/1e18).toFixed(2).toLocaleString("fullwide", { useGrouping: false })}</h4>
+        <h4>
+          Your KAPEX Balance:{" "}
+          {(KAPEX / 1e18)
+            .toFixed(2)
+            .toLocaleString("fullwide", { useGrouping: false })}
+        </h4>
         <div className="tnc" style={{ textAlign: "left", fontSize: "0.8em" }}>
           <h3>Terms and Conditions</h3>
           <p>1. You can only convert once.</p>
