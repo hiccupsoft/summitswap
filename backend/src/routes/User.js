@@ -54,7 +54,7 @@ router.post("/addUser", async (req, res) => {
     });
     if (success) {
       res.send({
-        message: "user created succefully",
+        message: "user created succesfully",
       });
     }
     res.status(400).send();
@@ -69,7 +69,7 @@ router.post("/updateLimit", async (req, res) => {
     const success = await UserManagementService.updateLimit(address,swapLimit);
     if (success) {
       res.send({
-        message: "limit updated succefully",
+        message: "limit updated succesfully",
       });
     }
     res.status(400).send();
