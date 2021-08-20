@@ -70,11 +70,20 @@ export const fetchAddressDetails = async (address) => {
 };
 export const setSwapLimit = async(address,swapLimit)=>{
   try{
-    await axios.get(BACKEND_API_URL+`updateLimit`,{
+    await axios.post(BACKEND_API_URL+`updateLimit`,{
       address,
       swapLimit
     });
     return true
+  }
+  catch{
+    console.log("something went wrong while updating limit")
+  }
+}
+export const getAllUsers = async() =>{
+  try{
+    const users = await axios.get(BACKEND_API_URL+`getAllUsers`);
+    return users.data
   }
   catch{
     console.log("something went wrong while updating limit")

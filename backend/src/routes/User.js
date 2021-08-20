@@ -21,7 +21,7 @@ router.get("/getAllSwaps", async (req, res) => {
 
 router.get("/getAllUsers", async (req, res) => {
   try {
-    const details = await SwapManagementService.getAllUsers();
+    const details = await UserManagementService.getAllUsers();
     if (details) {
       res.send(details);
     }

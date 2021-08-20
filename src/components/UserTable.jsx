@@ -112,12 +112,12 @@ export default function UserTable({rows}) {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow className="table-row" key={row.name}>
+            <TableRow className="table-row" key={row.email}>
               <TableCell component="th" scope="row">
-                {row.email}
+                {row.emailId}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.swappedAmount}
+                {row.address}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
                 {row.swapLimit}
@@ -139,7 +139,7 @@ export default function UserTable({rows}) {
             <TablePagination
               className="table-row"
               rowsPerPageOptions={[]}
-              colSpan={3}
+              colSpan={4}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
