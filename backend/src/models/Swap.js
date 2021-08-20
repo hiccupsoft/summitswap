@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 require("mongoose-long")(mongoose);
-const BigNumber = require("bignumber.js");
-const BigNumberSchema = require("mongoose-bignumber");
-const { SwapCalls } = require("@material-ui/icons");
 const {
   Types: { Long },
 } = mongoose;
@@ -30,4 +27,4 @@ const swapSchema = new mongoose.Schema(
 );
 
 const Swap = mongoose.model("swap", swapSchema);
-module.exports = SwapCalls;
+module.exports = Swap;

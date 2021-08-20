@@ -16,12 +16,13 @@ const StartApplication = async () => {
     await connect(MONGODB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify:true
     });
     process.env.NODE_ENV === "development" ? set("debug", true) : "";
     console.log({ message: "DB connection established" });
     app.set("port", PORT || 3001);
     //setting up routes
-    app.use("/user", userAPI);
+    app.use(userAPI);
     app.listen(PORT, () => {
       console.log(`summitswap server listening at http://localhost:${PORT}`);
     });
