@@ -7,6 +7,7 @@ export const KAPEX_SWAP_ADDRESS = "0x21a88c9440E6dB6dC7d161d713163b2684bF8d6E";
 export const KAPEX_TOKEN_ADDRESS = "0xbaF513d9BDA330a1921092fC8ae6354F70A558FA";
 export const KODA_TOKEN_ADDRESS = "0xf1610b0224657ce827be377c60e800eb18a72837";
 export const KODA_TIP_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+export const BACKEND_API_URL = 'http://127.0.0.1:5001/'
 export const approveKODAforSwap = async (amount) => {
   const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
@@ -47,7 +48,7 @@ export const getKODAPrice = async () => {
   const web3 = new Web3(window.ethereum);
   return response.data.result[0].tokenPriceUSD;
 };
-export const createTipWallet = async (amount,username) => {
+export const createTipWallet = async (amount, username) => {
   const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
   const tipInstance = new web3.eth.Contract(KODATIPABI, KODA_TIP_ADDRESS);
@@ -63,6 +64,22 @@ export const approveKODAforTip = async (amount) => {
     .approve(KAPEX_SWAP_ADDRESS, amount)
     .send({ from: accounts[0] });
 };
+export const fetchAddressDetails = async (address) => {
+  const details = await axios.get(BACKEND_API_URL+`userDetails?address=${address}`);
+  return details.data;
+};
+export const setSwapLimit = async(address,swapLimit)=>{
+  try{
+    await axios.get(BACKEND_API_URL+`updateLimit`,{
+      address,
+      swapLimit
+    });
+    return true
+  }
+  catch{
+    console.log("something went wrong while updating limit")
+  }
+}
 // export const approveTransfer = (amount) =>{
 //   const web3 = new Web3(window.ethereum);
 //   const accounts = await web3.eth.getAccounts();
