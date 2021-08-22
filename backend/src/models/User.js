@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
-require("mongoose-long")(mongoose);
-const {
-  Types: { Long },
-} = mongoose;
 
-const swapSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     address: {
       type: String,
-      min: 6,
-      max: 255,
+      required: true,
+      unique: true,
     },
 
     emailId: {
@@ -18,7 +14,7 @@ const swapSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-    amount: {
+    swapLimit: {
       type: String,
       required: true,
     },
@@ -26,5 +22,5 @@ const swapSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Swap = mongoose.model("swap", swapSchema);
-module.exports = Swap;
+const User = mongoose.model("user", userSchema);
+module.exports = User;

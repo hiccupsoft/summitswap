@@ -7,29 +7,39 @@ import {
   swapKODAForKAPEX,
   balanceOf,
   KAPEX_TOKEN_ADDRESS,
+  fetchAddressDetails,
 } from "../web3/kodaMethods";
 import { useWallet } from "../providers/WalletProvider";
 function KapexSwap() {
   const [amount, setAmount] = useState(0);
+  const [email, setEmail] = useState("xyz@abc.com");
   const [KAPEX, setKAPEX] = useState(0);
-  const [isApproved,setIsApproved] = useState();
+  const [isApproved, setIsApproved] = useState();
   const wallet = useWallet();
-  const handleApprove = async ()=>{
-    const receipt = await approveKODAforSwap(String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false }));
-    setIsApproved(true)
-  }
+
+  const handleApprove = async () => {
+    const receipt = await approveKODAforSwap(
+      String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false })
+    );
+    setIsApproved(true);
+  };
   const handleSwap = async () => {
-    const receipt = await swapKODAForKAPEX(String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false }));
+    const receipt = await swapKODAForKAPEX(
+      String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false })
+    );
     const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
     setKAPEX(balance);
   };
   useEffect(() => {
     const init = async () => {
+      const res = await fetchAddressDetails(wallet.account);
+      setEmail(res.emailId);
+      setAmount(res.swapLimit);
       const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
-      console.log("KAPEX: ",balance)
+      console.log("KAPEX: ", balance);
       setKAPEX(balance);
     };
-    if (wallet.status=='connected') {
+    if (wallet.status == "connected") {
       init();
     }
   });
@@ -39,62 +49,80 @@ function KapexSwap() {
       <div className="swap-box">
         <h2>SWAP</h2>
         <img style={{ height: "5vh" }} src={kodaLogo} />
-        <p
-          style={{
-            fontSize: "0.8em",
-            width: "60%",
-            margin: "auto",
-            marginBottom: "30px",
-          }}
-        >
-          swap your KODA tokens for KAPEX, you can only send upto 50% of your
-          token supply
-        </p>
-        <br />
-        <TextField
-          size="small"
-          style={{
-            width: "50%",
-            borderRadius: "10px",
-            height: "35px",
-            margin: "auto",
-          }}
-          label=""
-          variant="outlined"
-          InputLabelProps={{ className: "text-label" }}
-          InputProps={{ className: "input-field" }}
-          value={amount}
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
-        />
-        <br />
-        {isApproved?(<Button
-          style={{ marginTop: "20px" }}
-          variant="contained"
-          color="secondary"
-          onClick={handleSwap}
-        >
-          Swap
-        </Button>):(
-          <Button
-          style={{ marginTop: "20px" }}
-          variant="contained"
-          color="secondary"
-          onClick={handleApprove}
-        >
-          Approve
-        </Button>
+        {wallet.status == "connected" ? (
+          <div>
+            <p
+              style={{
+                fontSize: "0.8em",
+                width: "70%",
+                margin: "auto",
+                marginBottom: "30px",
+              }}
+            >
+              Major Holder KODA x KODA APEX Swap
+            </p>
+            <p
+              style={{
+                fontSize: "0.8em",
+                marginBottom: "30px",
+              }}
+            >
+              Hello {email}
+            </p>
+            <p
+              style={{
+                fontSize: "0.8em",
+                marginBottom: "30px",
+              }}
+            >
+              You are swapping {amount} koda for koda apex
+            </p>
+            Press here to continue
+            <br />
+            <br />
+            <br />
+            {isApproved ? (
+              <Button
+                style={{ marginTop: "20px" }}
+                variant="contained"
+                color="secondary"
+                onClick={handleSwap}
+              >
+                Swap
+              </Button>
+            ) : (
+              <Button
+                style={{ marginTop: "20px" }}
+                variant="contained"
+                color="secondary"
+                onClick={handleApprove}
+              >
+                Approve
+              </Button>
+            )}
+            <h4>
+              Your KAPEX Balance:{" "}
+              {(KAPEX / 1e18)
+                .toFixed(2)
+                .toLocaleString("fullwide", { useGrouping: false })}
+            </h4>
+            <div
+              className="tnc"
+              style={{ textAlign: "left", fontSize: "0.8em" }}
+            >
+              <h3>Terms and Conditions</h3>
+              <p>1. You can only convert once.</p>
+              <p>
+                2. You can convert upto 50% of your token balance for an account
+              </p>
+              <p>3. Sale end on YYYY-MM-DD</p>
+            </div>
+          </div>
+        ) : (
+          <div style={{ marginTop: "50px" }}>
+            Please connect wallet to continue
+          </div>
         )}
-        <h4>Your KAPEX Balance: {(KAPEX/1e18).toFixed(2).toLocaleString("fullwide", { useGrouping: false })}</h4>
-        <div className="tnc" style={{ textAlign: "left", fontSize: "0.8em" }}>
-          <h3>Terms and Conditions</h3>
-          <p>1. You can only convert once.</p>
-          <p>
-            2. You can convert upto 50% of your token balance for an account
-          </p>
-          <p>3. Sale end on YYYY-MM-DD</p>
-        </div>
       </div>
     </div>
   );
