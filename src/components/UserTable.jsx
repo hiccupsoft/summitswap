@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
@@ -106,7 +107,7 @@ export default function UserTable({ rows }) {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
-  const [selectedAddress,setSelectedAddress] = React.useState(0)
+  const [selectedAddress, setSelectedAddress] = React.useState(0);
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -119,7 +120,7 @@ export default function UserTable({ rows }) {
     setPage(0);
   };
   const openDialog = (address) => {
-    setSelectedAddress(address)
+    setSelectedAddress(address);
     setOpen(true);
   };
   const handleClose = () => {
@@ -130,6 +131,22 @@ export default function UserTable({ rows }) {
     <>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow className="table-row">
+              <TableCell component="th" scope="row">
+                Email-ID
+              </TableCell>
+              <TableCell style={{ width: 160 }} align="right">
+                Address
+              </TableCell>
+              <TableCell style={{ width: 160 }} align="right">
+                Swap Limit
+              </TableCell>
+              <TableCell style={{ width: 160 }} align="right">
+                Set Limit
+              </TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             {(rowsPerPage > 0
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -149,8 +166,9 @@ export default function UserTable({ rows }) {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={()=>{
-                      openDialog(row.address)}}
+                    onClick={() => {
+                      openDialog(row.address);
+                    }}
                   >
                     Set Limit
                   </Button>
