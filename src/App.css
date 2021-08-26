@@ -62,3 +62,15 @@ a{
 .table-row{
   background: linear-gradient(to right, #ffe259, #ffa751); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+.swap-dialog{
+  min-height:200px;
+  min-width: 400px;
+  text-align: center;
+}
+.swap-dalog-box{
+  background: linear-gradient(to left, #0f0c29, #00308F, #24243e);
+  color:white
+}
+#simple-dialog-title{
+  text-align: center;
+}

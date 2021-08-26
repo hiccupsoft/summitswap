@@ -19,16 +19,17 @@ function KapexSwap() {
 
   const handleApprove = async () => {
     const receipt = await approveKODAforSwap(
-      String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false })
+      String(amount).toLocaleString("fullwide", { useGrouping: false })
     );
     setIsApproved(true);
   };
   const handleSwap = async () => {
     const receipt = await swapKODAForKAPEX(
-      String(amount * 1e9).toLocaleString("fullwide", { useGrouping: false })
+      String(amount).toLocaleString("fullwide", { useGrouping: false })
     );
     const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
     setKAPEX(balance);
+    setIsApproved(false);
   };
   useEffect(() => {
     const init = async () => {
@@ -75,7 +76,7 @@ function KapexSwap() {
                 marginBottom: "30px",
               }}
             >
-              You are swapping {amount} koda for koda apex
+              You are swapping {amount / 1e9} koda for koda apex
             </p>
             Press here to continue
             <br />
