@@ -116,12 +116,9 @@ export default function TransactionTable({rows}) {
               <TableCell component="th" scope="row">
                 {row.from}
               </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {row.blockNumber}
-              </TableCell>
               <a href={`https://testnet.bscscan.com/tx/${row.hash}`}>
               <TableCell style={{ width: 160 }} align="right">
-                <Button variant="contained" color="secondary"> View </Button>
+                <Button variant="contained" color="secondary"> Details </Button>
               </TableCell>
               </a>
             </TableRow>
