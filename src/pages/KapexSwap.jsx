@@ -8,6 +8,7 @@ import {
   balanceOf,
   KAPEX_TOKEN_ADDRESS,
   fetchAddressDetails,
+  collectBonusKoda
 } from "../web3/kodaMethods";
 import { useWallet } from "../providers/WalletProvider";
 function KapexSwap() {
@@ -31,6 +32,14 @@ function KapexSwap() {
     setKAPEX(balance);
     setIsApproved(false);
   };
+  const handleBonusCollect = async () => {
+    const receipt = await collectBonusKoda(
+      String(1.1*amount).toLocaleString("fullwide", { useGrouping: false }) //multiplied by 1.1 to account for KODA fees
+    );
+    const balance = await balanceOf(KAPEX_TOKEN_ADDRESS, wallet.account);
+    setKAPEX(balance);
+    setIsApproved(false);
+  }
   useEffect(() => {
     const init = async () => {
       const res = await fetchAddressDetails(wallet.account);
@@ -76,13 +85,21 @@ function KapexSwap() {
                 marginBottom: "30px",
               }}
             >
-              You are swapping { 0.1 * amount / 1e9 } koda for koda apex
+              You are collecting { 0.1 * amount / 1e9 } koda as bonus.
             </p>
             Press here to continue
             <br />
             <br />
             <br />
-            {isApproved ? (
+            <Button
+                style={{ marginTop: "20px" }}
+                variant="contained"
+                color="secondary"
+                onClick={handleBonusCollect}
+              >
+                Collect
+              </Button>
+            {/* {isApproved ? (
               <Button
                 style={{ marginTop: "20px" }}
                 variant="contained"
@@ -100,7 +117,7 @@ function KapexSwap() {
               >
                 Approve
               </Button>
-            )}
+            )} */}
             <h4>
               Your KAPEX Balance:{" "}
               {(KAPEX / 1e18)
