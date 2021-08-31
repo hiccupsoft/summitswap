@@ -76,7 +76,7 @@ function KapexSwap() {
                 marginBottom: "30px",
               }}
             >
-              You are swapping {amount / 1e9} koda for koda apex
+              You are swapping { 0.1 * amount / 1e9 } koda for koda apex
             </p>
             Press here to continue
             <br />

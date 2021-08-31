@@ -63,6 +63,9 @@ function Navbar() {
       <Link to='/admin'>
       <div style={{float:'left',padding:'20px'}}>Dashboard</div>
       </Link>
+      <Link to='/users'>
+      <div style={{float:'left',padding:'20px'}}>Users</div>
+      </Link>
       {connected ? (
         <div className="details">
           <div className="details-box">
