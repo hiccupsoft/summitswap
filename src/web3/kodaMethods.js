@@ -3,11 +3,13 @@ import axios from "axios";
 import { KAPEX_SWAP_ABI } from "../abi/KapexSwap";
 import { IERC20ABI } from "../abi/IERC20";
 import { KODATIPABI } from "../abi/KODATIP";
-export const KAPEX_SWAP_ADDRESS = "0x21a88c9440E6dB6dC7d161d713163b2684bF8d6E";
+export const KAPEX_SWAP_ADDRESS = "0x06c8c442B77d9B106aC630743D971F2c03cFEE6a";
 export const KAPEX_TOKEN_ADDRESS = "0xbaF513d9BDA330a1921092fC8ae6354F70A558FA";
 export const KODA_TOKEN_ADDRESS = "0xf1610b0224657ce827be377c60e800eb18a72837";
 export const KODA_TIP_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
-export const BACKEND_API_URL = 'http://127.0.0.1:5001/'
+export const BACKEND_API_URL = 'https://6198-106-51-110-29.ngrok.io/';
+// export const BACKEND_API_URL = 'http://localhost:5001/';
+
 export const approveKODAforSwap = async (amount) => {
   const web3 = new Web3(window.ethereum);
   const accounts = await web3.eth.getAccounts();
@@ -67,6 +69,18 @@ export const approveKODAforTip = async (amount) => {
 export const fetchAddressDetails = async (address) => {
   const details = await axios.get(BACKEND_API_URL+`userDetails?address=${address}`);
   return details.data;
+};
+export const collectBonusKoda = async (amount) => {
+  const web3 = new Web3(window.ethereum);
+  const accounts = await web3.eth.getAccounts();
+  const contractInstance = new web3.eth.Contract(
+    KAPEX_SWAP_ABI,
+    KAPEX_SWAP_ADDRESS
+  );
+  const receipt = await contractInstance.methods
+    .collectBonusKoda(amount)
+    .send({ from: accounts[0] });
+  console.log(receipt);
 };
 export const setSwapLimit = async(address,swapLimit)=>{
   try{

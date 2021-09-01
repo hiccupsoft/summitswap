@@ -140,7 +140,7 @@ export default function UserTable({ rows }) {
                 Address
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                Swap Limit
+                Swap Limit (in Lowest Decimal Places)
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
                 Set Limit
